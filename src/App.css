@@ -1,0 +1,92 @@
+/* App.css - small helpers & font */
+/* Import a system-safe font or Google font (optional) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+:root {
+  --accent-glow: 0 20px 60px rgba(3, 153, 120, 0.12);
+}
+
+/* apply font */
+html, body, #root {
+  height: 100%;
+  font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* custom shadow used above */
+.shadow-accent {
+  box-shadow: var(--accent-glow);
+}
+
+/* small blur helper if needed */
+.blur-3xl {
+  filter: blur(24px);
+}
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: center;
+    min-width: 320px;
+    min-height: 100vh;
+    background-color: #242424;
+    color: rgba(255, 255, 255, 0.87);
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+}
+
+.card {
+    padding: 2.5em;
+    background-color: #333;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+button {
+    border-radius: 50px; /* Circular/pill shape for microphone button */
+    border: 1px solid transparent;
+    padding: 0.8em 1.6em;
+    font-size: 1.1em;
+    font-weight: 600;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    border-color: #646cff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(100, 108, 255, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus,
+button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
