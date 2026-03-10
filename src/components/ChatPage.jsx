@@ -19,6 +19,7 @@ export default function ChatPage({
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState("");
+  const sessionIdRef = useRef("");
 
   const textareaRef = useRef(null);
   const messagesRef = useRef(null);
@@ -28,10 +29,16 @@ export default function ChatPage({
     if (!activeSessionId) {
       setMessages([]);
       setSessionId("");
+      sessionIdRef.current = "";
+      return;
+    }
+
+    if (activeSessionId === sessionIdRef.current) {
       return;
     }
 
     setSessionId(activeSessionId); // 🔑 sync local session
+    sessionIdRef.current = activeSessionId;
 
     const History = async () => {
       try {
@@ -158,6 +165,7 @@ export default function ChatPage({
               receivedSessionId = true;
 
               setSessionId(data.session_id);
+              sessionIdRef.current = data.session_id;
 
               if (!activeSessionId && onSessionCreated) {
                 onSessionCreated(data.session_id);
@@ -187,10 +195,10 @@ export default function ChatPage({
         m.map((msg) =>
           msg.id === thinkingMsgId
             ? {
-              ...msg,
-              typing: false,
-              content: "Something went wrong. Please try again.",
-            }
+                ...msg,
+                typing: false,
+                content: "Something went wrong. Please try again.",
+              }
             : msg,
         ),
       );
@@ -327,10 +335,11 @@ export default function ChatPage({
                       )}
 
                       <div
-                        className={`max-w-[72%] rounded-xl px-4 py-3 text-sm leading-relaxed ${m.role === "user"
+                        className={`max-w-[72%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
+                          m.role === "user"
                             ? "bg-[#1e9f6d] text-[#042E5C] ml-auto"
                             : "bg-white/10 text-white"
-                          }`}
+                        }`}
                       >
                         {m.typing ? (
                           <div className="flex gap-2 items-center py-2">
@@ -417,10 +426,11 @@ export default function ChatPage({
                 <button
                   onClick={send}
                   disabled={!input.trim() || loading}
-                  className={`px-3 py-2 rounded-full text-sm font-semibold transition ${input.trim()
+                  className={`px-3 py-2 rounded-full text-sm font-semibold transition ${
+                    input.trim()
                       ? "bg-gradient-to-r from-[#05c07a] to-[#2ae3a0] text-[#042E5C]"
                       : "opacity-40 cursor-not-allowed"
-                    }`}
+                  }`}
                 >
                   Send
                 </button>

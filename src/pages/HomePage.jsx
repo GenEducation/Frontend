@@ -7,7 +7,6 @@ import LeftPanel from "../components/LeftPanel";
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("chat");
   const [chatKey, setChatKey] = useState(Date.now());
-  const [history, setHistory] = useState([]);
   const [activeSessionId, setActiveSessionId] = useState(null);
   const navigate = useNavigate();
 
@@ -15,32 +14,7 @@ export default function HomePage() {
     const storedUser = sessionStorage.getItem("user");
     if (!storedUser) {
       navigate("/auth");
-      return;
     }
-
-    const fetchHistory = async () => {
-      try {
-        const user = JSON.parse(storedUser);
-
-        const res = await fetch("/get-history", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_id: user.username || user.user_id,
-            session_id: activeSessionId || "",
-          }),
-        });
-
-        if (!res.ok) return;
-
-        const data = await res.json();
-        setHistory(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error("Failed to fetch chat history", err);
-      }
-    };
-
-    fetchHistory();
   }, [navigate]);
 
   return (
@@ -62,7 +36,6 @@ export default function HomePage() {
       <main className="flex-1 overflow-hidden">
         {activeTab === "chat" ? (
           <ChatPage
-            key={activeSessionId || ""}
             sessionId={activeSessionId}
             onSessionCreated={(newSessionId) => {
               setActiveSessionId(newSessionId);
