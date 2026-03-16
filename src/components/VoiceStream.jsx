@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { WS_API_BASE, getFullUrl } from "../api/apiConfig";
 
 /* 🔒 Toggle this to false when voice is ready */
 const COMING_SOON = false;
@@ -110,10 +111,9 @@ const VoiceStream = () => {
       setDebugInfo(`Sample Rate: ${audioContext.sampleRate}Hz`);
       setStatus("Connecting to server...");
 
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-      const wsUrl = `${protocol}//${window.location.host}/ws/native_audio?user_id=${user.username}`;
+      const wsUrl = `${getFullUrl(WS_API_BASE, "/ws/native_audio")}?user_id=${user.username}`;
 
       const socket = new WebSocket(wsUrl);
       socket.binaryType = "arraybuffer";
@@ -153,7 +153,6 @@ const VoiceStream = () => {
 
       socket.onmessage = (event) => {
         if (typeof event.data === "string") {
-
           const msg = JSON.parse(event.data);
 
           if (msg.type === "transcript") {
@@ -163,7 +162,6 @@ const VoiceStream = () => {
           if (msg.type === "ai_response") {
             console.log("AI:", msg.text);
           }
-
         } else {
           playAudioChunk(event.data);
         }
@@ -207,11 +205,7 @@ const VoiceStream = () => {
       float32Data[i] = int16Data[i] / 32768.0;
     }
 
-    const buffer = audioContext.createBuffer(
-      1,
-      float32Data.length,
-      24000
-    );
+    const buffer = audioContext.createBuffer(1, float32Data.length, 24000);
     buffer.getChannelData(0).set(float32Data);
 
     const source = audioContext.createBufferSource();
@@ -256,9 +250,7 @@ const VoiceStream = () => {
             </p>
 
             {debugInfo && (
-              <p style={{ fontSize: "0.8rem", color: "#666" }}>
-                {debugInfo}
-              </p>
+              <p style={{ fontSize: "0.8rem", color: "#666" }}>{debugInfo}</p>
             )}
           </div>
         </div>
