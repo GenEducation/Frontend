@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../App.css"; // small extra CSS (font + helper shadows)
-
-const AUTH_API_BASE = ""; // set your auth API base here
+import { AUTH_API_BASE, getFullUrl } from "../api/apiConfig";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -29,7 +28,7 @@ export default function AuthPage() {
     setLoading(true);
 
     const endpoint = isLogin ? "/sign-in" : "/sign-up";
-    const url = `${AUTH_API_BASE}${endpoint}`;
+    const url = getFullUrl(AUTH_API_BASE, endpoint);
 
     const payload = isLogin
       ? { username: formData.username, password: formData.password }
