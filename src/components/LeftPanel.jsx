@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CORE_API_BASE, getFullUrl } from "../api/apiConfig";
 
 /**
  * LeftPanel
@@ -26,7 +27,7 @@ export default function LeftPanel({
       const userData = JSON.parse(sessionStorage.getItem("user") || "{}");
       setUser(userData);
 
-      const res = await fetch("/get-session", {
+      const res = await fetch(getFullUrl(CORE_API_BASE, "/get-session"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

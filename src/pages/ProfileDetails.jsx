@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { MEM0_API_BASE, getFullUrl } from "../api/apiConfig";
 
 /* -------------------- helpers -------------------- */
 function normalizeValue(raw) {
@@ -30,7 +31,7 @@ export default function ProfileDetails() {
     const parsed = JSON.parse(raw);
     setUser(parsed);
 
-    fetch("/all", {
+    fetch(getFullUrl(MEM0_API_BASE, "/all"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ user_id: parsed.user_id }),

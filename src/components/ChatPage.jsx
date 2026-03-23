@@ -4,6 +4,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import hljs from "highlight.js";
+import { CORE_API_BASE, getFullUrl } from "../api/apiConfig";
 // Make sure you import highlight.js CSS and KaTeX CSS once globally in your app:
 // import "katex/dist/katex.min.css";
 // import "highlight.js/styles/github-dark.css";
@@ -44,7 +45,7 @@ export default function ChatPage({
       try {
         const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-        const res = await fetch("/get-history", {
+        const res = await fetch(getFullUrl(CORE_API_BASE, "/get-history"), {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -129,7 +130,7 @@ export default function ChatPage({
     try {
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-      const res = await fetch("/query", {
+      const res = await fetch(getFullUrl(CORE_API_BASE, "/query"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

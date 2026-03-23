@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import { WS_API_BASE, getFullUrl } from "../api/apiConfig";
 
 /* 🔒 Toggle this to false when voice is ready */
 const COMING_SOON = false;
@@ -110,7 +111,6 @@ const VoiceStream = () => {
       setDebugInfo(`Sample Rate: ${audioContext.sampleRate}Hz`);
       setStatus("Connecting to server...");
 
-      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
       const wsUrl = `${protocol}//${window.location.host}/ws/native_audio?user_id=${user.user_id}`;
