@@ -30,14 +30,14 @@ export default function LeftPanel({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          user_id: userData.username || "",
+          user_id: userData.user_id || "",
         }),
       });
 
       if (!res.ok) return;
 
       const data = await res.json();
-      setSessions(Array.isArray(data) ? data : []);
+      setSessions(Array.isArray(data.sessions) ? data.sessions : []);
     } catch (err) {
       console.error("Failed to fetch sessions", err);
     } finally {

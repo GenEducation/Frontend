@@ -27,11 +27,11 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
         },
         "/sign-in": {
-          target: env.VITE_AUTH_TARGET",
+          target: env.VITE_AUTH_TARGET,
           changeOrigin: true,
         },
         "/sign-up": {
-          target: env.VITE_AUTH_TARGET",
+          target: env.VITE_AUTH_TARGET,
           changeOrigin: true,
         },
         "/all": {

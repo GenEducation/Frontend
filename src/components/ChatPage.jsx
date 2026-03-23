@@ -48,7 +48,7 @@ export default function ChatPage({
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            user_id: user.username,
+            user_id: user.user_id,
             session_id: activeSessionId,
           }),
         });
@@ -58,7 +58,7 @@ export default function ChatPage({
         const data = await res.json();
 
         setMessages(
-          (Array.isArray(data) ? data : []).map((m, i) => ({
+          (Array.isArray(data.history) ? data.history : []).map((m, i) => ({
             id: `${activeSessionId}_${i}`,
             role: m.role,
             content: m.content,
@@ -134,7 +134,7 @@ export default function ChatPage({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           text: userMsg.content,
-          user_id: user.username || "user",
+          user_id: user.user_id || "user",
           session_id: sessionId || null, // null on first message
         }),
       });

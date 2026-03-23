@@ -10,6 +10,9 @@ export default function AuthPage() {
     username: "",
     email: "",
     password: "",
+    age: "",
+    grade: "",
+    school_board: "",
   });
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +37,9 @@ export default function AuthPage() {
           username: formData.username,
           email_id: formData.email,
           password: formData.password,
+          age: parseInt(formData.age, 10),
+          grade: parseInt(formData.grade, 10),
+          school_board: formData.school_board,
         };
 
     try {
@@ -171,6 +177,49 @@ export default function AuthPage() {
                     onChange={handleChange}
                     required
                     placeholder="Email address"
+                    className="w-full px-4 py-3 rounded-xl bg-white/6 border border-white/10 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#3ddc97]/40 transition"
+                  />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <label className="sr-only" htmlFor="age">
+                      Age
+                    </label>
+                    <input
+                      id="age"
+                      name="age"
+                      type="number"
+                      value={formData.age}
+                      onChange={handleChange}
+                      required
+                      placeholder="Age"
+                      className="w-full px-4 py-3 rounded-xl bg-white/6 border border-white/10 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#3ddc97]/40 transition"
+                    />
+
+                    <label className="sr-only" htmlFor="grade">
+                      Grade
+                    </label>
+                    <input
+                      id="grade"
+                      name="grade"
+                      type="number"
+                      value={formData.grade}
+                      onChange={handleChange}
+                      required
+                      placeholder="Grade"
+                      className="w-full px-4 py-3 rounded-xl bg-white/6 border border-white/10 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#3ddc97]/40 transition"
+                    />
+                  </div>
+
+                  <label className="sr-only" htmlFor="school_board">
+                    School Board
+                  </label>
+                  <input
+                    id="school_board"
+                    name="school_board"
+                    value={formData.school_board}
+                    onChange={handleChange}
+                    required
+                    placeholder="School Board (e.g. CBSE, ICSE)"
                     className="w-full px-4 py-3 rounded-xl bg-white/6 border border-white/10 text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#3ddc97]/40 transition"
                   />
                 </>

@@ -33,7 +33,7 @@ export default function ProfileDetails() {
     fetch("/all", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: parsed.username }),
+      body: JSON.stringify({ user_id: parsed.user_id }),
     })
       .then((r) => r.json())
       .then((d) => {
@@ -151,6 +151,10 @@ export default function ProfileDetails() {
 
               <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
+                  ["Email", user.email],
+                  ["Age", user.age],
+                  ["Grade", user.grade],
+                  ["School Board", user.school_board],
                   ["Archetype", "The Logician"],
                   ["Language", memoryMap.language || "English"],
                   ["Tone", memoryMap.tone_preference],
