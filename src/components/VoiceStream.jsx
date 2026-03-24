@@ -113,7 +113,7 @@ const VoiceStream = () => {
 
       const user = JSON.parse(sessionStorage.getItem("user") || "{}");
 
-      const wsUrl = `${getFullUrl(WS_API_BASE, "/ws/native_audio")}?user_id=${user.username}`;
+      const wsUrl = `${protocol}//${window.location.host}/ws/native_audio?user_id=${user.user_id}`;
 
       const socket = new WebSocket(wsUrl);
       socket.binaryType = "arraybuffer";

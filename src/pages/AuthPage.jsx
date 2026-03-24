@@ -49,9 +49,14 @@ export default function AuthPage() {
       });
 
       if (!res.ok) {
-        // try to read JSON / fallback to status text
-        const txt = await res.text();
-        throw new Error(txt || `Request failed ${res.status}`);
+        let errMsg = "";
+        try {
+          const errData = await res.json();
+          errMsg = errData?.detail || JSON.stringify(errData);
+        } catch {
+          errMsg = `Error ${res.status}: ${res.statusText || "Something went wrong"}`;
+        }
+        throw new Error(errMsg);
       }
 
       const data = await res.json();
@@ -74,7 +79,7 @@ export default function AuthPage() {
       }
     } catch (err) {
       console.error("Auth error:", err);
-      setStatus("Server error — ensure the auth service is running.");
+      setStatus(err.message || "An unexpected error occurred.");
     } finally {
       setLoading(false);
     }
